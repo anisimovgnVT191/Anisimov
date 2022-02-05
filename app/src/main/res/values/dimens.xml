@@ -5,4 +5,9 @@
     <dimen name="appbar_padding">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="text_description_padding">16dp</dimen>
+    <dimen name="main_fragment_margin">8dp</dimen>
+    <dimen name="text_description_size">16sp</dimen>
+    <dimen name="main_fragment_elevation">6dp</dimen>
+    <dimen name="cardview_corner_radius">15dp</dimen>
 </resources>
