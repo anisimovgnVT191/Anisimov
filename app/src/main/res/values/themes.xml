@@ -19,7 +19,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.DevelopersLife.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.DevelopersLife.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">#287BD7</item>
+        <item name="colorPrimaryVariant">#287BD7</item>
+    </style>
 
     <style name="Theme.DevelopersLife.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
