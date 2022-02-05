@@ -7,8 +7,8 @@ import retrofit2.http.Path
 
 interface DevsLifeAPI {
 
-    @GET("{postCategory}/{pageNumber}")
-    fun getPostsByPageNumber(
+    @GET("{postCategory}/{pageNumber}?json=true")
+    suspend fun getPostsByPageNumber(
         @Path(value = "pageNumber", encoded = true) pageNumber: Int,
         @Path(value = "postCategory", encoded = true) postCategory: String
     ):Response<DevsLifeResponse>
