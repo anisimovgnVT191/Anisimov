@@ -9,6 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="back_button">#F6BD12</color>
     <color name="forward_button">#47B049</color>
-    <color name="gradient_start">#00000000</color>
-    <color name="gradient_end">#727273</color>
+    <color name="gradient_start">#727273</color>
+    <color name="gradient_end">#00000000</color>
 </resources>

@@ -69,6 +69,10 @@ class PlaceholderFragment : Fragment() {
         return root
     }
 
+    override fun onStart() {
+        super.onStart()
+        pageViewModel.uiState.value!!.post?:pageViewModel.fetchNewPosts(postCategory)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pageViewModel.uiState.observe(viewLifecycleOwner){ state ->

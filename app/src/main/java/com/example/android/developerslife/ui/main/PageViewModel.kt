@@ -70,7 +70,7 @@ class PageViewModel(
                 Log.e("viewModel", result.right.result.toString())
                 postsList = result.right.result.map { Post.from(it) }
                 _uiState.value = uiState.value!!.copy(
-                    post = postsList!!.takePost(),
+                    post = postsList!!.run { if(isNotEmpty()) takePost() else null },
                     exceptionOccurred = false,
                     exception = null
                 )
