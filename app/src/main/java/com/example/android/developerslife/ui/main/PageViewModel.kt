@@ -1,8 +1,8 @@
 package com.example.android.developerslife.ui.main
 
-import android.graphics.pdf.PdfDocument
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.android.developerslife.DataLayer.MainFeature.DataModels.Result
 import com.example.android.developerslife.DataLayer.MainFeature.DevsLifeRepository
 import com.example.android.developerslife.DataLayer.MainFeature.PostCategory
 import com.example.android.developerslife.DomainLayer.Either
@@ -14,41 +14,63 @@ import kotlinx.coroutines.launch
 class PageViewModel(
     private val devsLifeRepository: DevsLifeRepository
 ) : ViewModel() {
-    private var pageNumber: Int = 0
+    private var pageNumber: Int = -1
 
     private val _uiState = MutableLiveData(PageState(
-        postsList = emptyList(),
+        post = null,
         exceptionOccurred = false,
-        exception = null))
+        exception = null,
+        canGoBack = false))
     val uiState: LiveData<PageState> get() = _uiState
 
+    private var postsList: List<Post>? = null
+
     fun fetchOldPosts(postCategory: PostCategory){
-        if(pageNumber - 1 <= 0) { return }
-        else { fetchPosts(postCategory, --pageNumber)}
+        uiState.value!!.post?.let { post ->
+            val index = postsList!!.indexOf(post)
+            postsList!!.getOrNull(index-1)?.let {
+                _uiState.value = uiState.value!!.copy(
+                    post = it,
+                    canGoBack = !((index-1) == 0 && pageNumber == 0))
+                return
+            }
+        }
+        _uiState.value = uiState.value!!.copy(canGoBack = --pageNumber!=-1)
+        fetchPosts(postCategory, pageNumber, List<Post>::last)
     }
+
     fun fetchNewPosts(postCategory: PostCategory){
-        fetchPosts(postCategory, pageNumber++)
+        uiState.value!!.post?.let { post ->
+            val index = postsList!!.indexOf(post)
+            postsList!!.getOrNull(index+1)?.let {
+                _uiState.value = uiState.value!!.copy(post = it, canGoBack = true)
+                return
+            }
+        }
+        _uiState.value = uiState.value!!.copy(canGoBack = ++pageNumber!=0)
+        fetchPosts(postCategory, pageNumber, List<Post>::first)
     }
 
     private var fetchPostsJob: Job? = null
-    private fun fetchPosts(postCategory: PostCategory, pageNumber: Int){
+    private fun fetchPosts(
+        postCategory: PostCategory,
+        pageNumber: Int,
+        takePost: List<Post>.() -> Post){
 
         fetchPostsJob?.cancel()
         fetchPostsJob = viewModelScope.launch {
             val result = devsLifeRepository.getPostsByPageNumber(postCategory, pageNumber)
             if(result is Either.Left){
-                _uiState.value = PageState(
-                    postsList = emptyList(),
+                _uiState.value = uiState.value!!.copy(
+                    post = null,
                     exceptionOccurred = true,
                     exception = result.left
                 )
             }else if(result is Either.Right){
-                _uiState.value = PageState(
-                    postsList = result.right.result.map { Post(
-                        author = it.author,
-                        description = it.description,
-                        gifURL = it.gifURL
-                    ) },
+                Log.e("viewModel", result.right.result.toString())
+                postsList = result.right.result.map { Post.from(it) }
+                _uiState.value = uiState.value!!.copy(
+                    post = postsList!!.takePost(),
                     exceptionOccurred = false,
                     exception = null
                 )

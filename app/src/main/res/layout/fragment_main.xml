@@ -8,6 +8,7 @@
     tools:context=".ui.main.PlaceholderFragment">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/post_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="@dimen/main_fragment_margin"
@@ -20,9 +21,15 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/gif_place"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_circular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/description_text"
                 android:layout_width="match_parent"
