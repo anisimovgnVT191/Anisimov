@@ -3,4 +3,7 @@
     <string name="tab_text_1">Последние</string>
     <string name="tab_text_2">Лучшие</string>
     <string name="tab_text_3">Горячие</string>
+    <string name="reload">Повторить</string>
+    <string name="internet_error">Отсутствует соединение с интернетом. Проверьте своё подключние и повторите попытку.</string>
+    <string name="no_data_error">Данные с сервера не были получены. Попробуйте обновить страницу позднее.</string>
 </resources>

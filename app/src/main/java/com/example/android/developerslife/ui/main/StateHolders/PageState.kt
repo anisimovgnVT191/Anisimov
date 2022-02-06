@@ -7,9 +7,12 @@ data class PageState(
     val post: Post?,
     val canGoBack: Boolean,
     val exceptionOccurred: Boolean,
-    val exception: Exception?
+    val errorType: ErrorType? = null
 )
 
+enum class ErrorType{
+    NoDataRetrieved, InternetConnectionLost
+}
 data class Post(
     val author: String,
     val description: String,

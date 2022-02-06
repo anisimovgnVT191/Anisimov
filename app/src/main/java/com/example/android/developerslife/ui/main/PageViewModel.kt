@@ -9,10 +9,12 @@ import com.example.android.developerslife.DataLayer.MainFeature.DataModels.Resul
 import com.example.android.developerslife.DataLayer.MainFeature.DevsLifeRepository
 import com.example.android.developerslife.DataLayer.MainFeature.PostCategory
 import com.example.android.developerslife.DomainLayer.Either
+import com.example.android.developerslife.ui.main.StateHolders.ErrorType
 import com.example.android.developerslife.ui.main.StateHolders.PageState
 import com.example.android.developerslife.ui.main.StateHolders.Post
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class PageViewModel(
     private val devsLifeRepository: DevsLifeRepository
@@ -22,7 +24,7 @@ class PageViewModel(
     private val _uiState = MutableLiveData(PageState(
         post = null,
         exceptionOccurred = false,
-        exception = null,
+        errorType = null,
         canGoBack = false))
     val uiState: LiveData<PageState> get() = _uiState
 
@@ -68,8 +70,8 @@ class PageViewModel(
                 postsList = result!!.result.map { Post.from(it) }
                 _uiState.value = uiState.value!!.copy(
                     post = postsList!!.run { if(isNotEmpty()) takePost() else null },
-                    exceptionOccurred = false,
-                    exception = null
+                    exceptionOccurred = postsList!!.isEmpty(),
+                    errorType = if(postsList!!.isEmpty()) ErrorType.NoDataRetrieved else null
                 )
                 return@launch
             }
@@ -78,7 +80,8 @@ class PageViewModel(
                 _uiState.value = uiState.value!!.copy(
                     post = null,
                     exceptionOccurred = true,
-                    exception = result.left
+                    errorType = if(result.left is IOException) ErrorType.InternetConnectionLost
+                                else null
                 )
             }else if(result is Either.Right){
                 Log.e("viewModel", result.right.result.toString())
@@ -86,11 +89,17 @@ class PageViewModel(
                 postsList = result.right.result.map { Post.from(it) }
                 _uiState.value = uiState.value!!.copy(
                     post = postsList!!.run { if(isNotEmpty()) takePost() else null },
-                    exceptionOccurred = false,
-                    exception = null
+                    exceptionOccurred = postsList!!.isEmpty(),
+                    errorType = if(postsList!!.isEmpty()) ErrorType.NoDataRetrieved else null
                 )
             }
         }
+    }
+    fun reload(postCategory: PostCategory){
+        if(pageNumber==-1){
+            pageNumber++
+        }
+        fetchPosts(postCategory, pageNumber, List<Post>::first)
     }
     private fun isCached(key: Key):Boolean {
         return CacheManager.isCached(key.toString())
