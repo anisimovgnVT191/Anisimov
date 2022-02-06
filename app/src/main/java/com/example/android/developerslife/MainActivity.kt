@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.android.developerslife.DataLayer.CacheManager
 import com.example.android.developerslife.ui.main.SectionsPagerAdapter
 import com.example.android.developerslife.databinding.ActivityMainBinding
 
@@ -27,5 +28,10 @@ class MainActivity : AppCompatActivity() {
         val tabs: TabLayout = binding.tabs
         tabs.setupWithViewPager(viewPager)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CacheManager.clearCache()
     }
 }
