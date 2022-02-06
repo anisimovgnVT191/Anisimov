@@ -9,8 +9,19 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
+
+    <style name="Theme.DevelopersLife.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"><item name="colorPrimary">#00000000</item>
+        <item name="colorPrimaryVariant">#287BD7</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="colorSecondary">#287BD7</item>
+    </style>
+    <style name="Theme.DevelopersLife.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

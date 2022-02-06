@@ -11,24 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.DevelopersLife.AppBarOverlay"
-        android:elevation="1dp">
+        app:elevation="1dp">
 
-        <TextView
-            android:id="@+id/title"
+        <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+            android:layout_height="?attr/actionBarSize"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            app:title="@string/app_name"
+            app:titleCentered="true"
+            app:navigationIcon="@drawable/ic_baseline_person_24" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="#287BD7"
-            app:tabSelectedTextColor="#287BD7"/>
+            app:tabSelectedTextColor="#287BD7"
+            app:elevation="1dp"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

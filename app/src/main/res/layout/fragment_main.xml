@@ -77,6 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/main_fragment_margin"
         android:src="@drawable/ic_baseline_arrow_forward_24"
+        android:theme="@style/Theme.DevelopersLife"
         app:tint="@color/forward_button"
         app:elevation="@dimen/main_fragment_elevation"
         app:backgroundTint="@color/white"
